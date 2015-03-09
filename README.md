@@ -9,6 +9,8 @@ Here I will be simulating:
 - Gather the responses, process them and answer to the client.
 - Send also the response via POST to a 3rd system
 
+![ScreenShot](https://raw.githubusercontent.com/SFRJ/edge2edge/master/diagram.png)
+
 Note:    
 I created a fake server for every system that the application under tests talks to, this way
 the acceptance test is isolated and tests just the application from edge to edge.
@@ -21,4 +23,4 @@ System integration testing is slow, expensive and hard to mantain.
 You can build a full distributed system the ATDD way following this approach, there is no need for an integration
 test.
 
-![ScreenShot](https://raw.githubusercontent.com/SFRJ/edge2edge/master/diagram.png)
+
