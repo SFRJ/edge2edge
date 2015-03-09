@@ -21,4 +21,4 @@ System integration testing is slow, expensive and hard to mantain.
 You can build a full distributed system the ATDD way following this approach, there is no need for an integration
 test.
 
-![ScreenShot](https://github.com/SFRJ/edge2edge/master/diagram.png)
+![ScreenShot](https://raw.githubusercontent.com/SFRJ/edge2edge/master/diagram.png)
