@@ -11,11 +11,11 @@ Here I will be simulating:
 
 ![ScreenShot](https://raw.githubusercontent.com/SFRJ/edge2edge/master/diagram.png)
 
-Note:    
+Notes:    
 I created a fake server for every system that the application under tests talks to, this way
 the acceptance test is isolated and tests just the application from edge to edge.
 
-Note: It's very important to not confuse edge to edge with a system integration test. 
+It's very important to not confuse edge to edge with a system integration test. 
 This is an acceptance test for an application, it describes the criteria for acceptance for the application
 under test, and not for the whole system. 
 
