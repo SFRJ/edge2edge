@@ -9,24 +9,7 @@ Here I will be simulating:
 - Gather the responses, process them and answer to the client.
 - Send also the response via POST to a 3rd system
 
-   0
-  <|>
-  / \
-  client
-   |                   App             System A             System B                     System C  
-   |          get       |       get        |                   |                              |
-   | ---------------->  |  --------------> |                   |                              |  
-   |                    |  <-------------- |                   |                              |         
-   |                    |       get        |                   |                              |
-   |                    |  ----------------------------------> |                              |
-   |                    |  <---------------------------------- |                              |
-   |                    |                    post                                             |
-   |                    |  -----------------------------------------------------------------> |
-   |                    |  <----------------------------------------------------------------- |
-   | <----------------- |
-   
-
-Note:   
+Note:    
 I created a fake server for every system that the application under tests talks to, this way
 the acceptance test is isolated and tests just the application from edge to edge.
 
