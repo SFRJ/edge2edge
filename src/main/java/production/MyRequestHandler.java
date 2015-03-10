@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.sort;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;

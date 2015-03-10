@@ -8,15 +8,14 @@ import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import externalsystems.RequestsHistoryRepository;
 import externalsystems.WordsStartingWithConsonantGenerator;
 import externalsystems.WordsStartingWithVocalGenerator;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import production.TheApplication;
-
+import static javax.ws.rs.client.ClientBuilder.newClient;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -31,31 +30,31 @@ public class ClientGetsAllWordsOrderedAlphabeticallyTest extends TestState {
     //Application under test
     private TheApplication applicationUnderTest;
 
-     @Before
-     public void init() throws Exception {
-         vocals = new WordsStartingWithVocalGenerator(9998, "/", interestingGivens, capturedInputAndOutputs);
-         consonants = new WordsStartingWithConsonantGenerator(9997, "/", interestingGivens, capturedInputAndOutputs);
-         history = new RequestsHistoryRepository(9996, "/", capturedInputAndOutputs);
-         applicationUnderTest = new TheApplication(9999, "/");
-     }
+    @Before
+    public void init() throws Exception {
+        vocals = new WordsStartingWithVocalGenerator(9998, "/", interestingGivens, capturedInputAndOutputs);
+        consonants = new WordsStartingWithConsonantGenerator(9997, "/", interestingGivens, capturedInputAndOutputs);
+        history = new RequestsHistoryRepository(9996, "/", capturedInputAndOutputs);
+        applicationUnderTest = new TheApplication(9999, "/");
+    }
 
 
-     @After
-     public void cleanUp() throws Exception {
-         vocals.stopServer();
-         consonants.stopServer();
-         history.stopServer();
-         applicationUnderTest.stopServer();
-     }
+    @After
+    public void cleanUp() throws Exception {
+        vocals.stopServer();
+        consonants.stopServer();
+        history.stopServer();
+        applicationUnderTest.stopServer();
+    }
 
-     @Test
-     public void shouldReceiveWordsOrderedAlphabetically() throws Exception {
-         given(theVocalsGeneratorHas("apple-early-uboat"));
-         and(theConsonantGeneratorHas("car-frog"));
-         when(aClientSendsARequestToTheApplication());
-         then(theApplicatationResponse(), is("apple car early frog uboat"));
-         then(theAuditedMessage(), is("the following message was audited: 'apple car early frog uboat'"));
-     }
+    @Test
+    public void shouldReceiveWordsOrderedAlphabetically() throws Exception {
+        given(theVocalsGeneratorHas("apple-early-uboat"));
+        and(theConsonantGeneratorHas("car-frog"));
+        when(aClientSendsARequestToTheApplication());
+        then(theApplicatationResponse(), is("apple car early frog uboat"));
+        then(theAuditedMessage(), is("the following message was audited: 'apple car early frog uboat'"));
+    }
 
     private GivensBuilder theVocalsGeneratorHas(String words) {
         return givens -> {
@@ -73,11 +72,11 @@ public class ClientGetsAllWordsOrderedAlphabeticallyTest extends TestState {
 
     private ActionUnderTest aClientSendsARequestToTheApplication() {
         return (givens, captures) -> {
-            ResteasyClient client = new ResteasyClientBuilder().build();
-            ResteasyWebTarget target = client.target("http://localhost:9999/");
-            Response response = target.request().get();
+            String url = "http://localhost:9999/";
+            WebTarget target = newClient().target(url);
+            Invocation.Builder invocationBuilder = target.request();
+            Response response = invocationBuilder.get();
             captures.add("response", response.readEntity(String.class));
-            response.close();
             return captures;
         };
     }
