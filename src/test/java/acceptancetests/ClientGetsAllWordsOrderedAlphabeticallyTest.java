@@ -13,11 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import production.TheApplication;
-import static javax.ws.rs.client.ClientBuilder.newClient;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+
 import javax.ws.rs.core.Response;
 
+import static javax.ws.rs.client.ClientBuilder.newClient;
 import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpecRunner.class)
@@ -72,10 +71,7 @@ public class ClientGetsAllWordsOrderedAlphabeticallyTest extends TestState {
 
     private ActionUnderTest aClientSendsARequestToTheApplication() {
         return (givens, captures) -> {
-            String url = "http://localhost:9999/";
-            WebTarget target = newClient().target(url);
-            Invocation.Builder invocationBuilder = target.request();
-            Response response = invocationBuilder.get();
+            Response response = newClient().target("http://localhost:9999/").request().get();
             captures.add("response", response.readEntity(String.class));
             return captures;
         };
